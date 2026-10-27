@@ -1,0 +1,71 @@
+/* Theme "Beige": the first look of the app, paper on a beige desk. The whole look of the app comes from here:
+   colours, fonts, shadows, radii, icons and images.
+   New theme = a copy of this folder with other values (see ../README.md).
+   Paths in url() are relative to app/ (inside a CSS custom property, url() resolves against the stylesheet that uses it). */
+:root {
+  /* backgrounds */
+  --bg-page: #fbfaf6;                     /* pages outside the test */
+  --bg-desk: #e9e6dd;                     /* the "desk" under the sheet during a test */
+  --bg-desk-image: none;
+  --veil-rgb: 233, 230, 221;              /* the veil above and below in focus (same colour as the desk) */
+  --paper: #ffffff;                       /* the sheet of paper */
+  --surface: #ffffff;                     /* cards, buttons, fields */
+  --surface-2: #f2f0ea;                   /* hover, lightly tinted areas */
+  --track: #ece9df;                       /* the empty part of the meters */
+  --neighbour-veil: rgba(255, 255, 255, .42); /* the veil over the neighbouring tasks */
+  --neighbour-veil-blur: 1.6px;
+
+  /* text and lines */
+  --ink: #1d2433;
+  --muted: #6b7280;
+  --line: #e3e0d6;
+  --line-strong: #9aa0a6;
+  --grid: #c9c6bd;                        /* grid lines of charts and diagrams */
+
+  /* accent */
+  --accent: #22807f;
+  --accent-dark: #1b6c6b;
+  --accent-light: #e4f2f1;
+  --on-accent: #ffffff;                   /* text on the accent */
+  --fill: #cfe7e6;                        /* filled cells in drawings */
+  --yellow: #ffc400;
+
+  /* states */
+  --correct: #1f8a4c;
+  --correct-bg: #dff3e7;
+  --wrong: #c0392b;
+  --wrong-bg: #fbe4e1;
+  --stamp: #c0392b;                       /* the red stamp with the points */
+  --important: #b07a00;
+  --important-bg: #fff6dc;
+  --hidden-digit-bg: #ffe58a;             /* the hidden digit □ */
+  --hidden-digit-border: #c9a400;
+
+  /* chart series (checked for colour blindness, up to 3 at once) */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+
+  /* fonts */
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-numbers: ui-monospace, Menlo, monospace;
+  --font-stamp: Georgia, serif;
+  --font-paper: "Times New Roman", Times, "Liberation Serif", serif;   /* the sheet: like the real MON test (Times 12 pt) */
+
+  /* shape */
+  --radius: 10px;
+  --radius-large: 14px;
+  --radius-paper: 6px;
+  --arrow-size: 48px;                     /* the up/down arrows: large, finger-sized */
+  --shadow-small: 0 2px 10px rgba(0, 0, 0, .08);
+  --shadow-paper: 0 1px 2px rgba(0, 0, 0, .08), 0 12px 40px rgba(60, 50, 30, .12);
+
+  /* icons (masks: the colour comes from the text) and images */
+  --icon-sheet: url("themes/beige/icons/sheet.svg");
+  --icon-focus: url("themes/beige/icons/focus.svg");
+  --icon-up: url("themes/beige/icons/up.svg");
+  --icon-down: url("themes/beige/icons/down.svg");
+  --icon-exit: url("themes/beige/icons/exit.svg");
+  --logo: url("themes/beige/img/logo.svg");
+  --avatar: url("themes/beige/img/avatar.png");   /* the fluffy mascot on the home page (pose "reading" from assets/mascot/poses-12.png) */
+}

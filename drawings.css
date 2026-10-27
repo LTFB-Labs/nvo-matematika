@@ -1,0 +1,24 @@
+/* Task drawings: shared by all pages */
+.diagram { max-width: 100%; height: auto; }
+.diagram .fig, .diagram .clock-face { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.diagram .hidden-edge { stroke-dasharray: 4 3; stroke-width: 1.1; }
+.diagram .cell { fill: var(--paper); stroke: var(--line-strong); stroke-width: 1; }
+.diagram .cell.filled { fill: var(--fill); stroke: var(--accent); }
+.diagram .hand { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.diagram .hand.thick { stroke-width: 3.5; }
+.diagram .clock-digit { font-size: 10px; fill: var(--ink); }
+.diagram .dot { fill: var(--ink); }
+.diagram .label { font-size: 12px; fill: var(--ink); }
+.diagram .grid-line { stroke: var(--grid); stroke-width: 1; }
+.diagram .bar { fill: var(--fill); stroke: var(--accent); stroke-width: 1.4; }
+.clock-pair { display: flex; gap: 24px; }
+.clock-pair figure { margin: 0; text-align: center; }
+.clock-pair figcaption { font-size: .85rem; color: var(--muted); }
+.column-sum { font: 600 20px/1.3 var(--font-numbers); border-collapse: collapse; }
+.column-sum td { width: 1.1em; text-align: center; padding: 0; }
+.column-sum .sum-line td { border-top: 2px solid var(--ink); }
+.hidden-digit { display: inline-block; width: .95em; background: var(--hidden-digit-bg); border: 1px solid var(--hidden-digit-border); color: transparent; }
+.data-table { border-collapse: collapse; font-size: .95rem; }
+.data-table th, .data-table td { border: 1px solid var(--line); padding: 4px 10px; text-align: left; }
+.data-table th { background: var(--surface-2); }
+

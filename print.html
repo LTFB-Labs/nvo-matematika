@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Пробно НВО за печат</title>
+  <link id="theme-css" rel="stylesheet" href="themes/blue/theme.css">
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="drawings.css">
+  <link rel="stylesheet" href="print.css">
+</head>
+<body>
+  <header class="print-header">
+    <div>
+      <h1>Пробно НВО по математика · 4. клас</h1>
+      <p class="subtitle">25 задачи · 60 минути · 100 точки · <span id="variant"></span></p>
+    </div>
+    <nav class="buttons">
+      <button id="new-variant">Нов вариант</button>
+      <button id="show-answers" aria-pressed="false">Покажи отговорите</button>
+      <button id="print-btn">Печат</button>
+    </nav>
+  </header>
+  <main id="test"></main>
+  <footer class="footer-bar">
+    <button id="check" class="primary">Провери</button>
+    <div id="result" aria-live="polite"></div>
+  </footer>
+  <script src="core.js"></script>
+  <script src="generators.js"></script>
+  <script src="print.js"></script>
+</body>
+</html>

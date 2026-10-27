@@ -1,8 +1,8 @@
-/* Общото за всички генератори: случайни числа със seed (един и същ вариант
-   се получава отново от същото число), запис на числата, числа с думи,
-   избираеми отговори и малки SVG чертежи. Без AI: всичко се смята с код. */
+/* Shared by all generators: seeded random numbers (the same seed gives the same
+   variant again), number formatting, numbers in words, multiple-choice options
+   and small SVG drawings. No AI: everything is computed in code. */
 
-/* mulberry32: бърз генератор със seed */
+/* mulberry32: a fast seeded generator */
 function makeRng(seed) {
   let a = seed >>> 0;
   const next = () => {
@@ -18,14 +18,14 @@ function makeRng(seed) {
   return { next, R, pick, shuffle };
 }
 
-/* 3405, но 34 050: както в тестовете на МОН, групираме по три от 10 000 нагоре */
+/* 3405 but 34 050: like the MON tests, group by three from 10 000 up */
 const fmt = n => { const s = String(n); return n >= 10000 ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : s; };
 const digitsOf = n => String(n).split('').reverse().map(Number);
 
-/* ---------- Числа с думи ----------
-   Правилата от тестовете: „петдесет милиона двадесет и седем хиляди и три“,
-   „четири милиона двеста и три хиляди и тридесет“. В група от три цифри „и“
-   стои пред последната дума; пред последната група — ако тя е една дума. */
+/* ---------- Numbers in words ----------
+   The rules from the tests: „петдесет милиона двадесет и седем хиляди и три“,
+   „четири милиона двеста и три хиляди и тридесет“. Inside a group of three digits „и“
+   goes before the last word; before the last group only if that group is one word. */
 const W_UNIT = { m: ['', 'един', 'два', 'три', 'четири', 'пет', 'шест', 'седем', 'осем', 'девет'],
                  f: ['', 'една', 'две', 'три', 'четири', 'пет', 'шест', 'седем', 'осем', 'девет'],
                  n: ['', 'едно', 'две', 'три', 'четири', 'пет', 'шест', 'седем', 'осем', 'девет'] };
@@ -56,9 +56,9 @@ function numberWords(n) {
   return groups.map(g => g.join(' ')).join(' ');
 }
 
-/* ---------- Избираем отговор ----------
-   Верният отговор + грешни, които са типични грешки. Връща буквите А, Б, В
-   в разбъркан ред и коя е вярната. */
+/* ---------- Multiple choice ----------
+   The correct answer + wrong ones that are typical mistakes. Returns the letters А, Б, В
+   in shuffled order and which one is correct. */
 function choices(rng, correct, wrongs, show = fmt) {
   const seen = new Set([String(correct)]);
   const ws = [];
@@ -69,45 +69,45 @@ function choices(rng, correct, wrongs, show = fmt) {
     seen.add(k); ws.push(w);
     if (ws.length === 2) break;
   }
-  if (ws.length < 2) throw new Error('няма достатъчно грешни отговори');
+  if (ws.length < 2) throw new Error('not enough distinct wrong answers');
   const all = rng.shuffle([correct, ...ws]);
   const letters = ['А', 'Б', 'В'];
-  const otgovori = {};
-  all.forEach((v, i) => { otgovori[letters[i]] = typeof v === 'string' && show === fmt ? v : show(v); });
-  return { otgovori, veren: letters[all.indexOf(correct)] };
+  const options = {};
+  all.forEach((v, i) => { options[letters[i]] = typeof v === 'string' && show === fmt ? v : show(v); });
+  return { options, answer: letters[all.indexOf(correct)] };
 }
 
-/* Грешка в една цифра: тип „сбърка една позиция“ */
+/* A mistake in one digit: the "missed one place value" kind */
 const nudgeDigit = (n, k, d) => n + d * 10 ** k;
 
 /* ---------- SVG ---------- */
-const svg = (w, h, body, cls = '') => `<svg class="cherteg ${cls}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">${body}</svg>`;
+const svg = (w, h, body, cls = '') => `<svg class="diagram ${cls}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">${body}</svg>`;
 const line = (x1, y1, x2, y2, extra = '') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${extra}/>`;
 const text = (x, y, s, extra = '') => `<text x="${x}" y="${y}" ${extra}>${s}</text>`;
 const poly = (pts, extra = '') => `<polygon points="${pts.map(p => p.join(',')).join(' ')}" ${extra}/>`;
 
-/* Часовник със стрелки. h: 0–11, m: 0–59 */
+/* Clock with hands. h: 0–11, m: 0–59 */
 function clockSvg(h, m, size = 110) {
   const c = size / 2, r = size / 2 - 6;
-  let body = `<circle cx="${c}" cy="${c}" r="${r}" class="ram"/>`;
+  let body = `<circle cx="${c}" cy="${c}" r="${r}" class="clock-face"/>`;
   for (let i = 1; i <= 12; i++) {
     const a = (i / 12) * 2 * Math.PI;
-    body += text(c + Math.sin(a) * (r - 12), c - Math.cos(a) * (r - 12) + 4, i, 'class="cif" text-anchor="middle"');
+    body += text(c + Math.sin(a) * (r - 12), c - Math.cos(a) * (r - 12) + 4, i, 'class="clock-digit" text-anchor="middle"');
   }
   const ah = ((h % 12) + m / 60) / 12 * 2 * Math.PI, am = m / 60 * 2 * Math.PI;
-  body += line(c, c, c + Math.sin(ah) * r * 0.5, c - Math.cos(ah) * r * 0.5, 'class="strelka debela"');
-  body += line(c, c, c + Math.sin(am) * r * 0.78, c - Math.cos(am) * r * 0.78, 'class="strelka"');
-  body += `<circle cx="${c}" cy="${c}" r="3" class="tochka"/>`;
+  body += line(c, c, c + Math.sin(ah) * r * 0.5, c - Math.cos(ah) * r * 0.5, 'class="hand thick"');
+  body += line(c, c, c + Math.sin(am) * r * 0.78, c - Math.cos(am) * r * 0.78, 'class="hand"');
+  body += `<circle cx="${c}" cy="${c}" r="3" class="dot"/>`;
   return svg(size, size, body);
 }
 
-/* Квадратна мрежа: cols × rows клетки, оцветени клетки като Set от "x,y" */
+/* Square grid: cols × rows cells, filled cells as a Set of "x,y" */
 function gridSvg(cols, rows, filled, cell = 22, label = '') {
   const w = cols * cell + 2, h = rows * cell + 2 + (label ? 18 : 0);
   let body = '';
   for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-    body += `<rect x="${1 + x * cell}" y="${1 + y * cell}" width="${cell}" height="${cell}" class="${filled.has(`${x},${y}`) ? 'kletka platna' : 'kletka'}"/>`;
+    body += `<rect x="${1 + x * cell}" y="${1 + y * cell}" width="${cell}" height="${cell}" class="${filled.has(`${x},${y}`) ? 'cell filled' : 'cell'}"/>`;
   }
-  if (label) body += text(1 + cell / 2, rows * cell + 16, label, 'class="etiket" text-anchor="middle"');
+  if (label) body += text(1 + cell / 2, rows * cell + 16, label, 'class="label" text-anchor="middle"');
   return svg(w, h, body);
 }

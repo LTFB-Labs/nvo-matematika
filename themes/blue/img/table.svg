@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
-  <!-- бяла маса: матова повърхност с фина пухкава текстура (шум), повтаря се -->
-  <filter id="zarno" x="0" y="0" width="100%" height="100%">
+  <!-- white table: matte surface with a fine fluffy texture (noise), tiles seamlessly -->
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
     <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="5" seed="7" stitchTiles="stitch"/>
     <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.56  0 0 0 0 0.58  1.6 0 0 0 -0.62"/>
   </filter>
-  <filter id="petna" x="0" y="0" width="100%" height="100%">
+  <filter id="blotches" x="0" y="0" width="100%" height="100%">
     <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" stitchTiles="stitch"/>
     <feColorMatrix values="0 0 0 0 0.85  0 0 0 0 0.86  0 0 0 0 0.88  0.5 0 0 0 -0.18"/>
   </filter>
   <rect width="320" height="320" fill="#f3f3f2"/>
-  <rect width="320" height="320" filter="url(#petna)"/>
-  <rect width="320" height="320" filter="url(#zarno)"/>
+  <rect width="320" height="320" filter="url(#blotches)"/>
+  <rect width="320" height="320" filter="url(#grain)"/>
 </svg>
