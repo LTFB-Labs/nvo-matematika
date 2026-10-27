@@ -1,0 +1,71 @@
+/* Тема „Синя“ (основната). Целият вид на приложението идва оттук:
+   цветове, шрифтове, сенки, заобляния, иконки и картинки.
+   Нова тема = копие на тази папка с други стойности (виж ../README.md).
+   Пътищата в url() са от папката app/ (в CSS променлива url() се смята спрямо файла, който я ползва). */
+:root {
+  /* фонове */
+  --fon-stranica: #f1f5ff;                 /* страниците извън теста */
+  --fon-masa: #f2f2f1;                     /* „бюрото“ под листа по време на тест: бяла маса */
+  --fon-masa-izobrazhenie: url("temi/sinya/img/masa.svg");
+  --zavesa-rgb: 242, 242, 241;             /* мъглата горе и долу във фокус (същият цвят като бюрото) */
+  --list: #ffffff;                         /* листът хартия */
+  --povarhnost: #ffffff;                   /* карти, бутони, полета */
+  --povarhnost-2: #eef3ff;                 /* посочване, леко оцветени места */
+  --pista: #e2e9f8;                        /* празната част на летвите */
+  --sloy-sasedi: rgba(255, 255, 255, .45); /* слоят върху съседните задачи */
+  --sloy-sasedi-blur: 1.6px;
+
+  /* текст и линии */
+  --mastilo: #13203d;
+  --bledo: #566789;
+  --linia: #d6e0f3;
+  --linia-silna: #9db0d3;
+  --mrezha: #d3ddf0;                       /* мрежата на графиките и диаграмите */
+
+  /* акцент */
+  --akcent: #2563eb;
+  --akcent-tamen: #1b4fcf;
+  --akcent-svetal: #e5edff;
+  --na-akcent: #ffffff;                    /* текст върху акцента */
+  --plat: #cfdcff;                         /* оцветени клетки в чертежите */
+  --zhalto: #ffc400;
+
+  /* състояния */
+  --vyarno: #15934a;
+  --vyarno-fon: #dcf7e6;
+  --greshno: #d92d2d;
+  --greshno-fon: #fde3e3;
+  --pechat: #d92d2d;                       /* червеният печат с точките */
+  --vazhno: #a86400;
+  --vazhno-fon: #fff3d3;
+  --kv-fon: #ffe58a;                       /* скритата цифра □ */
+  --kv-ramka: #e0a800;
+
+  /* серии в графиките (проверени за далтонизъм, до 3 наведнъж) */
+  --seria-1: #2a78d6;
+  --seria-2: #eb6834;
+  --seria-3: #1baf7a;
+
+  /* шрифтове */
+  --shrift: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --shrift-chisla: ui-monospace, Menlo, monospace;
+  --shrift-pechat: Georgia, serif;
+  --shrift-list: "Times New Roman", Times, "Liberation Serif", serif;   /* листът: като истинския тест на МОН (Times 12 pt) */
+
+  /* форма */
+  --radius: 10px;
+  --radius-golyam: 14px;
+  --radius-list: 6px;
+  --strelka: 48px;                         /* стрелките нагоре/надолу: големи, за пръст */
+  --senka-malka: 0 2px 10px rgba(19, 32, 61, .08);
+  --senka-list: 0 1px 3px rgba(19, 32, 61, .12), 0 18px 50px rgba(19, 32, 61, .14);
+
+  /* иконки (маски: цветът идва от текста) и картинки */
+  --ikona-list: url("temi/sinya/ikoni/list.svg");
+  --ikona-fokus: url("temi/sinya/ikoni/fokus.svg");
+  --ikona-gore: url("temi/sinya/ikoni/gore.svg");
+  --ikona-dolu: url("temi/sinya/ikoni/dolu.svg");
+  --ikona-izhod: url("temi/sinya/ikoni/izhod.svg");
+  --logo: url("temi/sinya/img/logo.svg");
+  --avatar: url("temi/sinya/img/avatar.png");   /* Пухчето на началната страница (поза „чете“ от assets/mascot/poses-12.png) */
+}

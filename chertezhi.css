@@ -1,0 +1,24 @@
+/* Чертежите на задачите: общи за всички страници */
+.cherteg { max-width: 100%; height: auto; }
+.cherteg .fig, .cherteg .ram { fill: none; stroke: var(--mastilo); stroke-width: 1.6; }
+.cherteg .skrita { stroke-dasharray: 4 3; stroke-width: 1.1; }
+.cherteg .kletka { fill: var(--list); stroke: var(--linia-silna); stroke-width: 1; }
+.cherteg .kletka.platna { fill: var(--plat); stroke: var(--akcent); }
+.cherteg .strelka { stroke: var(--mastilo); stroke-width: 2; stroke-linecap: round; }
+.cherteg .strelka.debela { stroke-width: 3.5; }
+.cherteg .cif { font-size: 10px; fill: var(--mastilo); }
+.cherteg .tochka { fill: var(--mastilo); }
+.cherteg .etiket { font-size: 12px; fill: var(--mastilo); }
+.cherteg .mrezha { stroke: var(--mrezha); stroke-width: 1; }
+.cherteg .stalbche { fill: var(--plat); stroke: var(--akcent); stroke-width: 1.4; }
+.dvoika { display: flex; gap: 24px; }
+.dvoika figure { margin: 0; text-align: center; }
+.dvoika figcaption { font-size: .85rem; color: var(--bledo); }
+.stalb { font: 600 20px/1.3 var(--shrift-chisla); border-collapse: collapse; }
+.stalb td { width: 1.1em; text-align: center; padding: 0; }
+.stalb .cherta td { border-top: 2px solid var(--mastilo); }
+.kv { display: inline-block; width: .95em; background: var(--kv-fon); border: 1px solid var(--kv-ramka); color: transparent; }
+.tablica { border-collapse: collapse; font-size: .95rem; }
+.tablica th, .tablica td { border: 1px solid var(--linia); padding: 4px 10px; text-align: left; }
+.tablica th { background: var(--povarhnost-2); }
+

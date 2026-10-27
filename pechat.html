@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Пробно НВО за печат</title>
+  <link id="tema-css" rel="stylesheet" href="temi/sinya/tema.css">
+  <script src="tema.js"></script>
+  <link rel="stylesheet" href="chertezhi.css">
+  <link rel="stylesheet" href="pechat.css">
+</head>
+<body>
+  <header class="glava">
+    <div>
+      <h1>Пробно НВО по математика · 4. клас</h1>
+      <p class="pod">25 задачи · 60 минути · 100 точки · <span id="variant"></span></p>
+    </div>
+    <nav class="butoni">
+      <button id="nov">Нов вариант</button>
+      <button id="otgovori" aria-pressed="false">Покажи отговорите</button>
+      <button id="pechat">Печат</button>
+    </nav>
+  </header>
+  <main id="test"></main>
+  <footer class="krai">
+    <button id="proveri" class="glaven">Провери</button>
+    <div id="rezultat" aria-live="polite"></div>
+  </footer>
+  <script src="osnova.js"></script>
+  <script src="generatori.js"></script>
+  <script src="pechat.js"></script>
+</body>
+</html>

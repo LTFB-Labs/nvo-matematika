@@ -1,0 +1,322 @@
+* { box-sizing: border-box; }
+html { scroll-padding-top: 70px; overflow-y: scroll; }   /* скролерът е винаги видим: страницата не подскача при смяна на режимите */
+body { margin: 0; background: var(--fon-stranica); color: var(--mastilo); font: 18px/1.55 var(--shrift); }
+a { color: var(--akcent); }
+button, .buton { font: inherit; font-size: .95rem; padding: 8px 16px; border: 1px solid var(--akcent); border-radius: var(--radius); background: var(--povarhnost); color: var(--akcent); cursor: pointer; text-decoration: none; display: inline-block; }
+button:hover, .buton:hover { background: var(--akcent-svetal); }
+.glaven { background: var(--akcent); color: var(--na-akcent); }
+.glaven:hover { background: var(--akcent-tamen); }
+.malak { font-size: .8rem; padding: 3px 10px; }
+
+/* горна лента */
+.gorna { display: flex; align-items: center; gap: 16px; padding: 10px 16px; background: var(--povarhnost); border-bottom: 1px solid var(--linia); position: sticky; top: 0; z-index: 5; }
+.logo { font-weight: 700; color: var(--mastilo); text-decoration: none; white-space: nowrap; }
+.logo::before { content: ''; display: inline-block; width: 22px; height: 22px; background: var(--logo) center / contain no-repeat; margin-right: 8px; vertical-align: -5px; }
+.glavno-menu { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.glavno-menu a { white-space: nowrap; }
+.glavno-menu a { padding: 6px 12px; border-radius: 8px; text-decoration: none; color: var(--mastilo); font-size: .95rem; }
+.glavno-menu a.aktiven { background: var(--akcent-svetal); color: var(--akcent); }
+
+/* страници */
+.nachalo, .stranica { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 1.7rem; margin: 0 0 6px; }
+h2 { font-size: 1.15rem; margin: 28px 0 10px; }
+.vodach { color: var(--bledo); margin: 0 0 18px; }
+.karti { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.karta-g { display: flex; flex-direction: column; gap: 4px; padding: 18px; background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); text-decoration: none; color: var(--mastilo); }
+.karta-g:hover { border-color: var(--akcent); }
+.karta-g b { font-size: 1.1rem; }
+.karta-g span { color: var(--bledo); font-size: .9rem; }
+.posleden { margin-top: 20px; }
+.red { display: flex; gap: 12px; align-items: baseline; padding: 10px 12px; border-bottom: 1px solid var(--linia); text-decoration: none; color: var(--mastilo); }
+.red:hover { background: var(--povarhnost); }
+.red .n, .umenie .n { display: inline-block; min-width: 1.8em; color: var(--akcent); font-weight: 700; }
+.red .ime { flex: 1; }
+.pr { color: var(--bledo); font-size: .85rem; white-space: nowrap; }
+
+/* умения */
+.umenie { background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); padding: 16px 18px; margin: 12px 0; }
+.umenie h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.umenie dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; font-size: .9rem; margin: 10px 0; }
+.umenie dt { color: var(--bledo); }
+.umenie dd { margin: 0; }
+.trudno { background: var(--vazhno-fon); border-left: 3px solid var(--zhalto); padding: 6px 10px; font-size: .88rem; }
+.primer { background: var(--fon-stranica); border-radius: var(--radius); padding: 10px 14px; margin: 10px 0; }
+.primer p { margin: 4px 0; }
+.otg-spisak { display: flex; gap: 6px 24px; flex-wrap: wrap; list-style: none; padding: 0; margin: 6px 0; }
+ol.otg-spisak { display: block; list-style: upper-alpha; padding-left: 22px; }
+details summary { cursor: pointer; color: var(--akcent); font-size: .9rem; }
+
+/* напредък */
+.geroi { background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); padding: 18px 20px 30px; }
+.geroi-chislo { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.geroi-chislo b { font-size: 3rem; line-height: 1; color: var(--mastilo); }
+.geroi-chislo span { color: var(--bledo); font-size: .9rem; }
+.letva-golyama { position: relative; height: 14px; background: var(--pista); border-radius: 7px; }
+.letva-golyama > span { display: block; height: 100%; background: var(--akcent); border-radius: 7px; }
+.letva-golyama i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--povarhnost); }
+.skala-ocenki { position: relative; height: 16px; font-size: .75rem; color: var(--bledo); }
+.skala-ocenki span { position: absolute; top: 4px; transform: translateX(-50%); }
+.skala-ocenki span:first-child { left: 0; transform: none; }
+.grafika { position: relative; background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); padding: 10px; }
+.grafika svg { width: 100%; height: auto; display: block; }
+.g-mrezha { stroke: var(--pista); stroke-width: 1; }
+.g-os { font-size: 11px; fill: var(--bledo); }
+.g-kursor { stroke: var(--bledo); stroke-width: 1; }
+.g-tooltip { position: absolute; top: 8px; transform: translateX(-50%); background: var(--povarhnost); border: 1px solid var(--linia); border-radius: 8px; padding: 6px 10px; font-size: .8rem; box-shadow: var(--senka-malka); pointer-events: none; white-space: nowrap; }
+.g-tooltip i, .legenda i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; font-size: .88rem; margin-bottom: 8px; }
+.filtar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.chip-b { padding: 4px 12px; border-radius: 999px; font-size: .85rem; border-color: var(--linia); color: var(--mastilo); }
+.chip-b.aktiven { background: var(--akcent); border-color: var(--akcent); color: var(--na-akcent); }
+.letvi { display: flex; flex-direction: column; }
+.letva-red { display: grid; grid-template-columns: 20px minmax(160px, 2.2fr) 3fr 72px auto; gap: 10px; align-items: center; padding: 6px 4px; border-bottom: 1px solid var(--linia); font-size: .92rem; cursor: pointer; }
+.letva-red.izbran { background: var(--povarhnost); }
+.letva { height: 10px; background: var(--pista); border-radius: 5px; overflow: hidden; }
+.letva span { display: block; height: 100%; background: var(--akcent); border-radius: 0 4px 4px 0; }
+abbr { color: var(--vazhno); font-weight: 700; text-decoration: none; cursor: help; }
+.malak-l { font-size: .8rem; }
+.istoria { padding-left: 18px; font-size: .9rem; color: var(--bledo); }
+.belezhka { color: var(--bledo); font-size: .85rem; }
+
+/* ---------- Тестът: лист хартия ---------- */
+body.v-test { background: var(--fon-masa); background-image: var(--fon-masa-izobrazhenie); background-attachment: fixed; }
+body.v-test .gorna { display: none; }
+.hartiya { position: relative; max-width: calc(816px * var(--zoom)); margin: 0 auto; background: var(--list); border-radius: var(--radius-list); box-shadow: var(--senka-list); padding: calc(64px * var(--zoom)) calc(88px * var(--zoom)); font: calc(16px * var(--zoom))/1.32 var(--shrift-list); }
+.tsyal-mod:not(.krai) .hartiya { cursor: grab; }
+.zaglavka { border-bottom: 2px solid var(--mastilo); padding-bottom: .8em; margin-bottom: 1.4em; }
+.zaglavka h1 { font-size: 1.15em; margin: 0; letter-spacing: .01em; }
+.pod-z { margin: .15em 0 .9em; color: var(--bledo); font-size: 1em; }
+.poleta { display: flex; flex-wrap: wrap; gap: .5em 2em; font-size: 1em; }
+.poleta input { font: inherit; border: none; border-bottom: 2px dotted var(--linia-silna); width: 11em; padding: 0 .2em; background: transparent; }
+.poleta input:focus { outline: none; border-bottom: 1px solid var(--akcent); }
+.poleta u { text-decoration: none; border-bottom: 2px dotted var(--linia-silna); padding: 0 .2em; }
+.ukazanie { font-size: 1em; color: var(--bledo); margin: .9em 0 0; }
+.pechat-rez:empty { display: none; }
+.pechat-rez { position: absolute; top: 18px; right: 22px; transform: rotate(-8deg); border: 3px solid var(--pechat); color: var(--pechat); border-radius: var(--radius); padding: 4px 14px; font: 700 1.6em/1.1 var(--shrift-pechat); text-align: center; }
+.pechat-rez small { display: block; font: 600 .45em/1.3 var(--shrift); }
+
+.zadacha { position: relative; padding: .9em 0 1em; border-bottom: 1px dashed var(--linia); transition: opacity .35s, filter .35s; }
+.nomer-z { display: flex; align-items: baseline; gap: .6em; }
+.nomer { font-weight: 700; font-size: 1.15em; }
+.nomer-z .meta { color: var(--bledo); font-size: .72em; }
+.vreme-z { margin-left: auto; color: var(--bledo); font-size: .72em; }
+.uslovie { font-size: 1em; margin: .3em 0 .7em; }
+.izraz { white-space: nowrap; font-weight: 600; margin-left: .3em; }
+.chertezh { margin: .3em 0 .8em; overflow-x: auto; }
+.chertezh .cherteg, .sa-chertezhi .cherteg { width: auto; height: auto; zoom: var(--zoom); }
+.izbor { display: flex; flex-wrap: wrap; gap: .45em .8em; }
+.opcia { display: flex; align-items: center; gap: .45em; padding: .35em .8em; border: 1px solid var(--linia); border-radius: .6em; cursor: pointer; }
+.opcia input { width: 1em; height: 1em; }
+.opcia:hover { border-color: var(--akcent); }
+.opcia:has(input:checked) { background: var(--akcent-svetal); border-color: var(--akcent); }
+.sa-chertezhi .opcia { flex-direction: column; align-items: flex-start; }
+.svoboden input { font: inherit; width: 9em; padding: .15em .4em; border: none; border-bottom: 2px solid var(--mastilo); background: transparent; margin-left: .3em; }
+.svoboden input:focus { outline: none; border-bottom-color: var(--akcent); background: var(--akcent-svetal); }
+.podusl p { margin: .6em 0 .3em; }
+.t { color: var(--bledo); font-size: .75em; }
+.dvizhenie { display: flex; flex-direction: column; align-items: center; gap: .4em; margin-top: 1em; font-size: .8em; }
+.strelka-b { display: grid; place-items: center; width: calc(var(--strelka) * 1.6); height: calc(var(--strelka) * 1.1); margin: 0 auto; padding: 0; border: none; background: none; color: var(--linia-silna); opacity: .6; transition: opacity .2s, color .2s; touch-action: manipulation; }
+.strelka-b:hover, .strelka-b:focus-visible { background: none; color: var(--bledo); opacity: 1; }
+.dvizhenie:empty { display: none; }
+.dolu-list { display: flex; justify-content: center; padding-top: 1.2em; }
+.dolu-list:empty { display: none; }
+.reshenie { display: none; margin: .7em 0 0; padding: .45em .8em; background: var(--akcent-svetal); border-left: 3px solid var(--akcent); font-size: .85em; }
+.provereno .reshenie, .krai .reshenie { display: block; }
+.provereno.vyarno .nomer { color: var(--vyarno); }
+.provereno.greshno .nomer { color: var(--greshno); }
+.provereno.vyarno .nomer::after { content: ' ✓'; }
+.provereno.greshno .nomer::after { content: ' ✗'; }
+.provereno .opcia.pravilna { border-color: var(--vyarno); background: var(--vyarno-fon); }
+.provereno .opcia:has(input:checked):not(.pravilna) { border-color: var(--greshno); background: var(--greshno-fon); }
+
+.otgovorena:not(.fokus) .nomer::before { content: '●'; color: var(--akcent); font-size: .6em; margin-right: .3em; vertical-align: .2em; }
+
+.tsyal-mod:not(.krai) .zadacha { cursor: pointer; }
+
+/* горе вдясно: таймер над бутона за целия лист; горе вляво: изход */
+.kontroli { position: fixed; top: 14px; right: 16px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.chas { font: 600 1.5rem/1 var(--shrift-chisla); background: var(--povarhnost); padding: 6px 10px; border-radius: var(--radius); box-shadow: var(--senka-malka); }
+.chas.malko { color: var(--greshno); }
+.ikona { display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border-radius: var(--radius); background: var(--povarhnost); border: 1px solid var(--linia); color: var(--mastilo); box-shadow: var(--senka-malka); }
+.izhod { position: fixed; top: 14px; left: 16px; z-index: 5; display: grid; place-items: center; width: 42px; height: 42px; border-radius: var(--radius); background: var(--povarhnost); text-decoration: none; color: var(--mastilo); box-shadow: var(--senka-malka); font-size: 1.2rem; }
+.krai .kontroli .ikona { display: none; }
+
+.rezultat-k { max-width: 760px; margin: 24px auto 0; padding: 22px; background: var(--povarhnost); border-radius: var(--radius); box-shadow: var(--senka-malka); }
+.rezultat-k:empty { display: none; }
+.golemi { font-size: 1.3rem; }
+.golemi b { font-size: 2.6rem; color: var(--akcent); }
+.chipove { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 4px 12px; border-radius: 999px; background: var(--akcent-svetal); text-decoration: none; font-size: .9rem; }
+.butoni-red { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+@media print {
+  body.v-test { background: var(--povarhnost); }
+  .kontroli, .izhod, .etap, .dvizhenie, .rezultat-k, .predai-b { display: none !important; }
+  .masa { --zoom: 1 !important; padding: 0; }
+  .hartiya { box-shadow: none; max-width: none; }
+  .zadacha { break-inside: avoid; }
+  .zadacha .tyalo { filter: none !important; opacity: 1 !important; }
+  .zadacha.predi, .zadacha.sled { max-height: none !important; margin: 0 !important; }
+}
+
+@media (max-width: 760px) {
+  .gorna { gap: 10px; padding: 8px 12px; }
+  .logo { font-size: .9rem; }
+  .glavno-menu a { padding: 6px 8px; font-size: .88rem; }
+  .letva-red { grid-template-columns: 20px 1fr 70px 52px; }
+  .letva-red .malak-l { display: none; }
+  .chas { font-size: 1.15rem; }
+  .ikona { width: 40px; height: 40px; }
+  .pechat-rez { top: 10px; right: 10px; font-size: 1.2em; }
+}
+
+.krai .otgovorena .nomer::before { display: none; }
+.hartiya .stalb { font-size: 1.15em; }
+body.v-test #rezultat { padding: 0 16px; }
+
+/* иконки от темата: маска, цветът е от текста */
+.ik { display: inline-block; width: 24px; height: 24px; background-color: currentColor; -webkit-mask: var(--ik) center / contain no-repeat; mask: var(--ik) center / contain no-repeat; }
+.ik-list { --ik: var(--ikona-list); }
+.ik-fokus { --ik: var(--ikona-fokus); }
+.ik-gore { --ik: var(--ikona-gore); width: var(--strelka); height: var(--strelka); }
+.ik-dolu { --ik: var(--ikona-dolu); width: var(--strelka); height: var(--strelka); }
+.ik-izhod { --ik: var(--ikona-izhod); }
+/* началото на листа е на фокус: стрелката води към първата задача */
+.zaglavka #nav-zaglavka { margin-top: .8em; }
+.izbor-tema { display: flex; gap: 6px; align-items: center; margin-top: 36px; color: var(--bledo); font-size: .9rem; }
+
+/* влачене на листа */
+.vlachene, .vlachene * { cursor: grabbing !important; }
+.hartiya input, .hartiya label, .hartiya button, .hartiya .opcia { cursor: pointer; }
+.hartiya input[type=text], .poleta input { cursor: text; }
+.strelka-t { font-size: .78rem; line-height: 1; color: var(--bledo); letter-spacing: .02em; }
+
+.ime-karta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); padding: 14px 16px; margin-bottom: 16px; }
+.ime-karta input { font: inherit; padding: 6px 10px; border: 1px solid var(--linia); border-radius: var(--radius); margin-left: 6px; }
+.ime-karta .belezhka { flex-basis: 100%; }
+
+/* потвърждение в страницата */
+.potvarzhdenie { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(var(--zavesa-rgb), .75); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.potv-karta { max-width: 380px; background: var(--povarhnost); border-radius: var(--radius-golyam); box-shadow: var(--senka-list); padding: 20px 22px; }
+.potv-karta p { margin: 0 0 16px; font-size: 1.05rem; }
+.potv-butoni { display: flex; justify-content: flex-end; gap: 10px; }
+
+/* клавиатура с цифри под задачата (телефон, таблет) */
+.tipkovnica { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 340px; margin: 14px auto 0; }
+.tipkovnica button { height: 58px; padding: 0; font: 600 1.6rem/1 var(--shrift); border-radius: var(--radius); background: var(--povarhnost-2); border: 1px solid var(--linia); color: var(--mastilo); touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.tipkovnica button:active { background: var(--akcent-svetal); border-color: var(--akcent); }
+.tipkovnica .k-triene { font-size: 1.4rem; color: var(--bledo); }
+.tipkovnica .k-enter { font-size: 1rem; background: var(--akcent); border-color: var(--akcent); color: var(--na-akcent); }
+.svoboden input.aktivno-pole { border-bottom-color: var(--akcent); background: var(--akcent-svetal); }
+.tipkovnica-myasto:empty { display: none; }
+
+/* ---------- Сцената във фокус ----------
+   Без скролиране: елементът на фокус е по средата, съседите надничат в горните и
+   долните 15 % под лек слой, стрелките са до тях. Позициите идват от razpolozhi() в list.js. */
+.masa { --zoom: 1; --pole-x: calc(88px * var(--zoom)); padding: 28px 16px 64px; }
+.masa.fokus-mod { --zoom: 1; --pole-x: clamp(28px, 7vw, 96px); padding: 0; }
+.fokus-mod .hartiya { position: fixed; top: max(28px, 4vh); bottom: max(28px, 4vh); left: 50%; transform: translateX(-50%); width: min(calc(100% - 32px), 980px); max-width: none; padding: 0; overflow: hidden; touch-action: none; }
+.fokus-mod .zaglavka, .fokus-mod .zadacha, .fokus-mod .dolu-list { position: absolute; top: 0; left: var(--pole-x); right: var(--pole-x); margin: 0; border-bottom: none; transform: translateY(calc(var(--y, 0px) + var(--drag, 0px))); transition: transform .5s cubic-bezier(.22, .8, .25, 1), opacity .35s; }
+.fokus-mod .zaglavka { padding-bottom: .8em; }
+.fokus-mod.bez-animacia .zaglavka, .fokus-mod.bez-animacia .zadacha, .fokus-mod.bez-animacia .dolu-list, .vlachene .zaglavka, .vlachene .zadacha { transition: none; }
+.fokus-mod .fokus { overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; z-index: 2; --zoom: 1.5; font-size: 1.5em; }
+/* елементът на фокус е с доста по-едър текст; съседите остават в нормален размер */
+.fokus-mod .daleche { opacity: 0; pointer-events: none; }
+.fokus-mod .sasedno { cursor: pointer; z-index: 1; overflow: hidden; }
+/* слой с backdrop-filter върху съседите (и номера им): виждат се, но не дърпат вниманието */
+.fokus-mod .sasedno::after { content: ''; position: absolute; inset: -4px 0; background: var(--sloy-sasedi); -webkit-backdrop-filter: blur(var(--sloy-sasedi-blur)); backdrop-filter: blur(var(--sloy-sasedi-blur)); }
+.fokus-mod .sasedno .nomer-z .meta { display: none; }
+.etap { position: fixed; left: 0; right: 0; z-index: 3; display: none; justify-content: center; pointer-events: none; }
+.etap > * { pointer-events: auto; }
+.fokus-mod .etap { display: flex; }
+.etap .krai-b { font-size: 1.05rem; padding: 12px 26px; }
+/* целият лист: по-малък шрифт, повече място между задачите, клик избира задача */
+.tsyal-mod .zadacha { padding: 1.6em 0 1.7em; }
+.tsyal-mod:not(.krai) .zadacha { cursor: pointer; }
+.vlachene .hartiya, .vlachene, .vlachene * { cursor: grabbing !important; user-select: none; }
+@media (max-width: 760px) {
+  .masa { padding: 64px 8px 48px; }
+  .masa.fokus-mod { --zoom: 1; --pole-x: 20px; }
+  .fokus-mod .fokus { --zoom: 1.2; font-size: 1.2em; }
+  .fokus-mod .hartiya { top: 64px; bottom: 16px; width: calc(100% - 16px); }
+  .tsyal-mod .hartiya { padding: 22px 18px; }
+}
+
+/* ---------- Листът 1:1 като истинския тест на МОН ----------
+   Times 12 pt, заглавката центрирана с главни букви, условието удебелено на един ред с номера,
+   отговорите А) Б) В) един под друг с отстъп, без рамки. Размерите се менят само във фокус (--zoom). */
+.zaglavka { text-align: center; border-bottom: none; padding-bottom: .4em; margin-bottom: 1.2em; }
+.z-gore { margin: 0 0 1.1em; padding-bottom: .35em; border-bottom: 1.5px solid var(--mastilo); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.zaglavka h1 { margin: 0; font-size: 1em; line-height: 1.32; font-weight: 700; text-transform: uppercase; letter-spacing: .01em; }
+.z-data { margin: .1em 0 1em; font-weight: 700; }
+.poleta { justify-content: center; font-size: 1em; }
+.ukazanie { position: relative; text-align: left; margin: 1em 0 0; padding-left: 1.8em; font-style: italic; color: var(--mastilo); font-size: 1em; }
+.ukazanie::before { content: '➢'; position: absolute; left: 0; font-style: normal; }
+.pod-z { display: none; }
+.zadacha { padding: .7em 0 .9em; border-bottom: none; }
+.tsyal-mod .zadacha { padding: .9em 0 1.1em; }
+.nomer-z { display: inline; float: left; margin-right: .35em; }
+.nomer { font-size: 1em; font-weight: 700; }
+.nomer-z .meta { display: none; }
+.vreme-z { position: absolute; right: 0; top: .9em; font: .75em var(--shrift); color: var(--bledo); }
+.uslovie { margin: 0 0 .5em; font-size: 1em; font-weight: 700; }
+.izraz { margin: .4em 0 .2em 2.4em; display: block; }
+.izbor { flex-direction: column; gap: .05em; padding-left: 2.4em; }
+.izbor.sa-chertezhi { flex-direction: row; flex-wrap: wrap; gap: 1em 2em; }
+.opcia { border: none; border-radius: 0; padding: .05em 0; gap: .35em; font-weight: 400; }
+.opcia b { font-weight: 400; }
+.opcia:hover { border: none; }
+.opcia input { width: .85em; height: .85em; margin: 0 .2em 0 0; accent-color: var(--akcent); }
+.opcia:has(input:checked) { background: none; color: var(--akcent); font-weight: 700; }
+.opcia:has(input:checked) b { font-weight: 700; }
+.sa-chertezhi .opcia { border: none; padding: 0; }
+.chertezh { padding-left: 2.4em; }
+.svoboden { display: block; padding-left: 2.4em; }
+.svoboden input { font: inherit; width: 8em; border-bottom: 1.5px dotted var(--mastilo); }
+.podusl p { margin: .4em 0 .2em 2.4em; }
+.podusl .svoboden, .podusl .reshenie { margin-left: 2.4em; }
+.hartiya .stalb { font-size: 1em; margin-left: 2.4em; }
+.reshenie { font-family: var(--shrift); }
+.provereno .opcia.pravilna { background: none; color: var(--vyarno); font-weight: 700; }
+.provereno .opcia:has(input:checked):not(.pravilna) { background: none; color: var(--greshno); text-decoration: line-through; }
+/* във фокус: само по-едро и по-удобно за пръст */
+.fokus-mod .opcia { padding: .2em .3em; min-height: 44px; }
+
+/* „Предай теста“: извън листа, долу вдясно; много блед, докато не са решени всички задачи */
+.predai-b { position: fixed; right: max(20px, env(safe-area-inset-right, 0px)); bottom: max(20px, env(safe-area-inset-bottom, 0px)); z-index: 6; padding: 12px 22px; font-size: 1.05rem; font-weight: 700; border: 1px solid var(--akcent); border-radius: var(--radius-golyam); background: var(--akcent); color: var(--na-akcent); box-shadow: var(--senka-malka); cursor: pointer; transition: opacity .3s, background .3s, color .3s, box-shadow .3s; }
+.predai-b:hover { background: var(--akcent-tamen); }
+.predai-b.blad { opacity: .35; background: transparent; color: var(--bledo); border-color: var(--linia-silna); box-shadow: none; font-weight: 600; }
+.predai-b.blad:hover { opacity: .7; background: transparent; }
+.predai-b[hidden] { display: none; }
+@media (max-width: 760px) {
+  .fokus-mod .hartiya { bottom: 72px; }
+  .predai-b { right: 12px; bottom: 14px; padding: 10px 18px; font-size: .95rem; }
+}
+
+/* краят на листа: под последната задача, както заглавката е над първата */
+.dolu-list { flex-direction: column; align-items: center; gap: 1em; padding-top: 1em; }
+.krai-tekst { width: 100%; margin: 0; padding-top: .6em; border-top: 1.5px solid var(--mastilo); text-align: center; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.fokus-mod .dolu-list #predai { display: none; }
+.dolu-list #predai:disabled { opacity: .35; cursor: default; }
+.predai-b:disabled { cursor: default; }
+
+/* лентата със задачите: под бутона за режима, широка колкото него; празна точка = без отговор, пълна = с отговор */
+.lenta { width: 46px; display: flex; flex-direction: column; align-items: stretch; padding: 6px 0; background: var(--povarhnost); border: 1px solid var(--linia); border-radius: var(--radius-golyam); box-shadow: var(--senka-malka); max-height: calc(100vh - 190px); overflow-y: auto; scrollbar-width: none; }
+.lenta-t { display: grid; place-items: center; height: 22px; flex: 0 0 auto; padding: 0; border: none; border-radius: 0; background: none; cursor: pointer; }
+.lt-tochka { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--linia-silna); background: transparent; transition: transform .2s, background .2s, border-color .2s; }
+.lenta-t:hover .lt-tochka { transform: scale(1.25); border-color: var(--bledo); }
+.lenta-t.otg .lt-tochka { background: var(--akcent); border-color: var(--akcent); }
+.lenta-t.sega .lt-tochka { width: 13px; height: 13px; border-width: 2px; border-color: var(--mastilo); box-shadow: 0 0 0 3px var(--akcent-svetal); }
+.lenta-t.sega.otg .lt-tochka { background: var(--mastilo); }
+.lenta-t.vyarno .lt-tochka { background: var(--vyarno); border-color: var(--vyarno); }
+.lenta-t.greshno .lt-tochka { background: var(--greshno); border-color: var(--greshno); }
+@media (max-width: 760px) { .lenta { display: none; } }
+
+/* „Старт“ в заглавката: таймерът тръгва при натискане */
+.start-myasto { display: flex; justify-content: center; margin-top: 1.4em; }
+.start-b { font: 700 1.05em var(--shrift); padding: .55em 2.4em; border-radius: var(--radius-golyam); }
+.ikona:disabled { opacity: .35; cursor: default; }
+
+/* Пухчето на началната страница (картинката е от темата) */
+.avatar { width: 168px; aspect-ratio: 263 / 230; max-width: 100%; background: var(--avatar) center / contain no-repeat; margin: 0 0 8px; }
