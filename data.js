@@ -4,12 +4,15 @@
 
    Collections:
    - profile  — { id: 'me', name }
-   - attempts — one practice test or practice session: { id, kind, number?, seed, at, points, max, seconds }
-   - answers  — every solved task: { id, attemptId, at, number, kind, points, scored, correct, seconds, realTaskId? }
+   - attempts — one practice test or practice session: { id, kind, number?, seed, at, points, max, seconds, childId? }
+   - answers  — every solved task: { id, attemptId, at, number, kind, points, scored, correct, seconds, realTaskId?, childId? }
      `realTaskId` identifies a task from a real MON test (e.g. 'nvo2024-13'):
      it is used to count how often it was solved right or wrong and the average time.
 
-   Provider = an object with async get(col, id), all(col), put(col, obj), remove(col, id), clear(col). */
+   Provider = an object with async get(col, id), all(col), put(col, obj), remove(col, id), clear(col).
+
+   `childId` is set when the app runs inside LevAcademy with a child (see connectLevAcademy below):
+   then attempts and answers are shown only for that child; records without childId only when no child is connected. */
 
 const COLLECTIONS = ['profile', 'attempts', 'answers'];
 
@@ -124,7 +127,7 @@ function makeData(provider) {
   let p = provider;
   const collection = col => ({
     get: id => p.get(col, id),
-    all: () => p.all(col),
+    all: async () => (col === 'profile' ? p.all(col) : (await p.all(col)).filter(r => (r.childId ?? null) === (la?.child?.id ?? null))),
     put: obj => p.put(col, obj),
     add: obj => p.put(col, { id: newId(), ...obj }),
     remove: id => p.remove(col, id),
@@ -159,17 +162,59 @@ function withFallback(primary, fallback) {
 
 const data = makeData(typeof indexedDB !== 'undefined' ? withFallback(indexedDbProvider(), memoryProvider()) : memoryProvider());
 
-/* ---------- The operations the app uses ---------- */
-async function saveAttempt(attempt, answers) {
-  const id = newId();
-  await data.attempts.put({ id, ...attempt });
-  for (const a of answers) await data.answers.put({ id: newId(), attemptId: id, at: attempt.at, ...a });
-  return id;
+/* ---------- LevAcademy ----------
+   Inside the LevAcademy site (https://ltfb-labs.github.io/nvo-matematika/) the core's SDK is at ../core/levacademy.js.
+   With a picked child, `la.child` gives the name, the local history is kept per child and every finished
+   test or practice is also sent to LevAcademy. Opened alone (the app folder at the server root, e.g. for
+   development) the file is not even requested: the app stays fully local. Any failure also means local. */
+let la = null;
+
+async function connectLevAcademy() {
+  const insideSite = location.protocol.startsWith('http') && location.pathname.replace(/[^/]*$/, '') !== '/';
+  if (!insideSite) return null;
+  try {
+    const timeout = new Promise((_, fail) => setTimeout(() => fail(new Error('timeout')), 5000));
+    const { LevAcademy } = await Promise.race([import('../core/levacademy.js'), timeout]);
+    la = await Promise.race([LevAcademy.connect({ app: 'nvo-matematika', contract: 1 }), timeout]);
+    la.on('child-changed', () => location.reload());
+    la.on('signed-out', () => location.reload());
+  } catch (e) {
+    console.warn('LevAcademy is not available, the app runs on its own:', e.message);
+    la = null;
+  }
+  return la;
 }
 
+/* ---------- The operations the app uses ---------- */
+/* Returns false if the attempt could not be sent to LevAcademy (it is kept locally anyway) */
+async function saveAttempt(attempt, answers) {
+  const id = newId();
+  const childId = la?.child ? { childId: la.child.id } : {};
+  await data.attempts.put({ id, ...attempt, ...childId });
+  for (const a of answers) await data.answers.put({ id: newId(), attemptId: id, at: attempt.at, ...a, ...childId });
+  if (!la?.child) return true;
+  try {
+    await la.saveActivity({
+      kind: attempt.kind,
+      topic: attempt.number ? `type-${attempt.number}` : 'all',
+      startedAt: new Date(Date.parse(attempt.at) - attempt.seconds * 1000).toISOString(),
+      finishedAt: attempt.at,
+      points: attempt.points,
+      maxPoints: attempt.max,
+      seconds: attempt.seconds,
+      details: { seed: attempt.seed, answers },
+    });
+    return true;
+  } catch (e) {
+    console.warn('Could not save to LevAcademy:', e);
+    return false;
+  }
+}
+
+/* Deletes the history that is shown: the connected child's, or the one without a child */
 async function clearHistory() {
-  await data.attempts.clear();
-  await data.answers.clear();
+  for (const r of await data.attempts.all()) await data.attempts.remove(r.id);
+  for (const r of await data.answers.all()) await data.answers.remove(r.id);
 }
 
 /* Stats per real MON task: how many times right, wrong, average time */

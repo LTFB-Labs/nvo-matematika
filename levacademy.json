@@ -1,0 +1,8 @@
+{
+  "id": "nvo-matematika",
+  "name": "НВО по математика",
+  "grades": [4],
+  "icon": "themes/blue/img/avatar.png",
+  "medals": [],
+  "contract": 1
+}

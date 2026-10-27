@@ -8,8 +8,9 @@ const MON_AVERAGE_2026 = 62.9;
 const percent = (a, b) => (b ? Math.round((100 * a) / b) : 0);
 const nameOf = n => TEMPLATES[n - 1].name;
 
-async function childName() { return (await data.profile.get('me'))?.name || ''; }
-async function saveName(name) { await data.profile.put({ id: 'me', name }); }
+/* Inside LevAcademy the name comes from the child's profile there */
+async function childName() { return la?.child?.name || (await data.profile.get('me'))?.name || ''; }
+async function saveName(name) { if (!la?.child) await data.profile.put({ id: 'me', name }); }
 
 /* ---------- Home ---------- */
 async function home() {
@@ -63,8 +64,8 @@ async function startSheet({ tasks, mode, title, subtitle, minutes, record }) {
     onName: saveName,
     onDone: async result => {
       const { answers, ...attempt } = result;
-      await saveAttempt({ ...record, at: new Date().toISOString(), ...attempt }, answers);
-      $('#result').innerHTML = resultHtml(result, { test: mode === 'test' });
+      const sent = await saveAttempt({ ...record, at: new Date().toISOString(), ...attempt }, answers);
+      $('#result').innerHTML = resultHtml(result, { test: mode === 'test' }) + (sent ? '' : '<p class="note">Не успяхме да запишем в LevAcademy. Резултатът е запазен на това устройство.</p>');
       $('#again').onclick = () => route(true);
       setTimeout(() => scrollTo(0, 0), 60);
     },
@@ -130,4 +131,4 @@ async function route(force) {
   else await home();
 }
 addEventListener('hashchange', () => route());
-route();
+connectLevAcademy().then(() => route());
