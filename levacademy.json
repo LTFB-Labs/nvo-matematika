@@ -1,8 +1,11 @@
 {
   "id": "nvo-matematika",
   "name": "НВО по математика",
-  "grades": [4],
+  "description": "Пробни тестове и упражнения за изпита в края на 4. клас.",
   "icon": "themes/blue/img/avatar.png",
-  "medals": [],
-  "contract": 1
+  "route": "nvo",
+  "grades": [4],
+  "contract": 2,
+  "permissions": ["user", "storage", "badges"],
+  "entry": "academy-app.js"
 }

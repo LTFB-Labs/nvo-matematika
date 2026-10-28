@@ -11,7 +11,7 @@
 
    Provider = an object with async get(col, id), all(col), put(col, obj), remove(col, id), clear(col).
 
-   `childId` is set when the app runs inside LevAcademy with a child (see connectLevAcademy below):
+   `childId` is set when the app runs inside LevAcademy with a child (see useAcademyCore below):
    then attempts and answers are shown only for that child; records without childId only when no child is connected. */
 
 const COLLECTIONS = ['profile', 'attempts', 'answers'];
@@ -163,51 +163,59 @@ function withFallback(primary, fallback) {
 const data = makeData(typeof indexedDB !== 'undefined' ? withFallback(indexedDbProvider(), memoryProvider()) : memoryProvider());
 
 /* ---------- LevAcademy ----------
-   Inside the LevAcademy site (https://ltfb-labs.github.io/nvo-matematika/) the core's SDK is at ../core/levacademy.js.
-   With a picked child, `la.child` gives the name, the local history is kept per child and every finished
-   test or practice is also sent to LevAcademy. Opened alone (the app folder at the server root, e.g. for
-   development) the file is not even requested: the app stays fully local. Any failure also means local. */
+   Opened alone, the app keeps everything in this browser. Inside LevAcademy (academy-app.js mounts it in the
+   shell's sandboxed frame) the child comes from the shell and the history is kept by the shell for this app and
+   child (core.appData), so it is the same on every device. `la.child` is that child. */
 let la = null;
 
-async function connectLevAcademy() {
-  const insideSite = location.protocol.startsWith('http') && location.pathname.replace(/[^/]*$/, '') !== '/';
-  if (!insideSite) return null;
-  try {
-    const timeout = new Promise((_, fail) => setTimeout(() => fail(new Error('timeout')), 5000));
-    const { LevAcademy } = await Promise.race([import('../core/levacademy.js'), timeout]);
-    la = await Promise.race([LevAcademy.connect({ app: 'nvo-matematika', contract: 1 }), timeout]);
-    la.on('child-changed', () => location.reload());
-    la.on('signed-out', () => location.reload());
-  } catch (e) {
-    console.warn('LevAcademy is not available, the app runs on its own:', e.message);
-    la = null;
-  }
-  return la;
+function useAcademyCore(core, child) {
+  const provider = {
+    name: 'LevAcademy',
+    get: (col, id) => core.appData.get(col, id),
+    all: (col) => core.appData.all(col),
+    put: (col, obj) => core.appData.put(col, obj),
+    remove: (col, id) => core.appData.remove(col, id),
+    clear: (col) => core.appData.clear(col),
+  };
+  data.use(provider);
+  la = { core, child: child && child.displayName ? { id: child.id, name: child.displayName } : child };
 }
 
 /* ---------- The operations the app uses ---------- */
-/* Returns false if the attempt could not be sent to LevAcademy (it is kept locally anyway) */
+/* Returns false if the attempt could not be saved (inside LevAcademy: no internet) */
 async function saveAttempt(attempt, answers) {
   const id = newId();
   const childId = la?.child ? { childId: la.child.id } : {};
-  await data.attempts.put({ id, ...attempt, ...childId });
-  for (const a of answers) await data.answers.put({ id: newId(), attemptId: id, at: attempt.at, ...a, ...childId });
-  if (!la?.child) return true;
+  const rows = answers.map(a => ({ id: newId(), attemptId: id, at: attempt.at, ...a, ...childId }));
   try {
-    await la.saveActivity({
-      kind: attempt.kind,
-      topic: attempt.number ? `type-${attempt.number}` : 'all',
-      startedAt: new Date(Date.parse(attempt.at) - attempt.seconds * 1000).toISOString(),
-      finishedAt: attempt.at,
-      points: attempt.points,
-      maxPoints: attempt.max,
-      seconds: attempt.seconds,
-      details: { seed: attempt.seed, answers },
-    });
-    return true;
+    // Inside LevAcademy the answers go with one call, and the attempt last: a failure leaves no half-saved test.
+    if (la?.core) await la.core.appData.putMany('answers', rows);
+    else for (const r of rows) await data.answers.put(r);
+    await data.attempts.put({ id, ...attempt, ...childId });
   } catch (e) {
-    console.warn('Could not save to LevAcademy:', e);
+    console.warn('Could not save the attempt:', e);
     return false;
+  }
+  if (la?.core) await grantBadges(attempt).catch(e => console.warn('Could not give a badge:', e));
+  return true;
+}
+
+/* Badges for the child's LevAcademy profile; the shell keeps them, even if this app goes away. */
+async function grantBadges(attempt) {
+  const attempts = await data.attempts.all();
+  const tests = attempts.filter(a => a.kind === 'test');
+  const grant = badge => la.core.grantUserBadge(badge);
+  if (attempt.kind === 'test' && tests.length === 1) {
+    await grant({ code: 'first-test', name: 'Първи пробен тест', icon: 'core:medal-bronze', description: 'Пробен тест по модела на НВО', reason: `Реши първия си пробен тест: ${attempt.points} от 100 точки` });
+  }
+  if (attempt.kind === 'practice' && attempts.filter(a => a.kind === 'practice').length === 1) {
+    await grant({ code: 'first-practice', name: 'Първо упражнение', icon: 'core:star', description: 'Упражнение по тип задача', reason: 'Направи първото си упражнение' });
+  }
+  if (attempt.kind === 'test' && attempt.points >= 84) {
+    await grant({ code: 'excellent-test', name: 'Отличен 6', icon: 'core:medal-gold', description: 'Пробен тест за Отличен 6', reason: `Пробен тест с ${attempt.points} от 100 точки` });
+  }
+  if (tests.length >= 10) {
+    await grant({ code: 'ten-tests', name: '10 пробни теста', icon: 'core:trophy', description: 'Десет пробни теста', reason: 'Реши 10 пробни теста' });
   }
 }
 

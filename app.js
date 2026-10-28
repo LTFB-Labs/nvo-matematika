@@ -65,7 +65,7 @@ async function startSheet({ tasks, mode, title, subtitle, minutes, record }) {
     onDone: async result => {
       const { answers, ...attempt } = result;
       const sent = await saveAttempt({ ...record, at: new Date().toISOString(), ...attempt }, answers);
-      $('#result').innerHTML = resultHtml(result, { test: mode === 'test' }) + (sent ? '' : '<p class="note">Не успяхме да запишем в LevAcademy. Резултатът е запазен на това устройство.</p>');
+      $('#result').innerHTML = resultHtml(result, { test: mode === 'test' }) + (sent ? '' : '<p class="note">Не успяхме да запишем резултата. Провери интернета.</p>');
       $('#again').onclick = () => route(true);
       setTimeout(() => scrollTo(0, 0), 60);
     },
@@ -131,4 +131,5 @@ async function route(force) {
   else await home();
 }
 addEventListener('hashchange', () => route());
-connectLevAcademy().then(() => route());
+/* Opened alone the app starts now; inside LevAcademy academy-app.js starts it after it connects. */
+if (!window.NVO_EMBEDDED) route();

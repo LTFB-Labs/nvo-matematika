@@ -81,7 +81,7 @@ abbr { color: var(--important); font-weight: 700; text-decoration: none; cursor:
 
 /* ---------- The test: a sheet of paper ---------- */
 body.in-test { background: var(--bg-desk); background-image: var(--bg-desk-image); background-attachment: fixed; }
-body.in-test .topbar, body.in-test .la-topbar { display: none; }   /* .la-topbar: the LevAcademy bar (core/levacademy.js) */
+body.in-test .topbar { display: none; }
 .paper { position: relative; max-width: calc(816px * var(--zoom)); margin: 0 auto; background: var(--paper); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: calc(64px * var(--zoom)) calc(88px * var(--zoom)); font: calc(16px * var(--zoom))/1.32 var(--font-paper); }
 .whole-mode:not(.finished) .paper { cursor: grab; }
 .sheet-header { border-bottom: 2px solid var(--ink); padding-bottom: .8em; margin-bottom: 1.4em; }

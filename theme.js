@@ -7,13 +7,15 @@ const THEMES = [
   { id: 'beige', name: 'Бежова' },
 ];
 const THEME_KEY = 'nvo4-math.theme';
+/* The themes are next to this file: inside LevAcademy the page is the shell's frame, not the app's folder. */
+const THEME_BASE = new URL('.', document.currentScript?.src || location.href);
 /* The first version kept the theme under another key with Bulgarian ids; the old key is left as it is. */
 const OLD_THEME_KEY = 'nvo4.tema';
 const OLD_THEME_IDS = { sinya: 'blue', bezhova: 'beige' };
 
 function setTheme(id, save = true) {
   if (!THEMES.some(t => t.id === id)) id = THEMES[0].id;
-  document.getElementById('theme-css').href = `themes/${id}/theme.css`;
+  document.getElementById('theme-css').href = new URL(`themes/${id}/theme.css`, THEME_BASE).href;
   document.documentElement.dataset.theme = id;
   if (save) { try { localStorage.setItem(THEME_KEY, id); } catch { /* private mode: lasts until the tab closes */ } }
 }
