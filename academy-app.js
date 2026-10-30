@@ -6,7 +6,7 @@
 import { defineApp } from '../core/academy-core/app.js';
 
 const base = new URL('.', import.meta.url);
-const SCRIPTS = ['theme.js', 'core.js', 'generators.js', 'skills.js', 'data.js', 'progress.js', 'sheet.js', 'app.js'];
+const SCRIPTS = ['theme.js', 'core.js', 'generators.js', 'skills.js', 'grades.js', 'data.js', 'progress.js', 'sheet.js', 'practice.js', 'app.js'];
 const STYLES = ['drawings.css', 'platform.css'];
 
 /** @param {string} href @param {string} [id] */
@@ -28,28 +28,34 @@ function addScript(src) {
 
 export default defineApp({
   id: 'nvo-matematika',
-  name: 'НВО по математика',
-  description: 'Пробни тестове и упражнения за изпита в края на 4. клас.',
+  name: 'Математика',
+  description: 'Уменията по програмата на МОН за 1.–7. клас и подготовка за НВО в 4. клас.',
   icon: 'themes/blue/img/avatar.png',
   route: 'nvo',
-  grades: [4],
+  grades: [1, 2, 3, 4, 5, 6, 7],
   contract: 2,
   permissions: ['user', 'storage', 'badges'],
 
   async mount(el, core) {
     document.documentElement.lang = 'bg';
-    document.title = 'НВО по математика · 4. клас';
+    document.title = 'Математика · 1.–7. клас и НВО';
     addStyle('themes/blue/theme.css', 'theme-css');
     STYLES.forEach((href) => addStyle(href));
     el.innerHTML = `<header class="topbar">
-      <a class="logo" href="#/">НВО · математика</a>
+      <a class="logo" href="#/">Математика</a>
       <nav class="main-nav">
-        <a href="#/test">Пробен тест</a>
-        <a href="#/types">Упражнения</a>
-        <a href="#/progress">Напредък</a>
-        <a href="#/skills">Умения</a>
+        <a href="#/">Класове</a>
+        <a href="#/nvo4">НВО 4. клас</a>
+        <a href="#/nvo7">НВО 7. клас</a>
       </nav>
     </header>
+    <nav class="sub-nav" aria-label="НВО в 4. клас">
+      <a href="#/nvo4">Начало</a>
+      <a href="#/nvo4/test">Пробен тест</a>
+      <a href="#/nvo4/types">Упражнения</a>
+      <a href="#/nvo4/progress">Напредък</a>
+      <a href="#/nvo4/skills">Умения за НВО</a>
+    </nav>
     <main id="view"></main>`;
 
     /** @type {any} */ (window).NVO_EMBEDDED = true;
@@ -57,7 +63,7 @@ export default defineApp({
 
     const w = /** @type {any} */ (window);
     w.useAcademyCore(core, await core.getUser());
-    // The address inside the app follows the shell's: /app/#/nvo/test opens the test.
+    // The address inside the app follows the shell's: /app/#/nvo/nvo4/test opens the test.
     if (core.route) location.hash = `#/${core.route}`;
     addEventListener('hashchange', () => core.navigate(location.hash.replace(/^#\/?/, '')));
     await w.route();

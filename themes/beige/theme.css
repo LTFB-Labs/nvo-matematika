@@ -35,6 +35,7 @@
   --correct-bg: #dff3e7;
   --wrong: #c0392b;
   --wrong-bg: #fbe4e1;
+  --score: #e8663a;                       /* the practice score panel */
   --stamp: #c0392b;                       /* the red stamp with the points */
   --important: #b07a00;
   --important-bg: #fff6dc;

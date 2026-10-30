@@ -57,7 +57,7 @@ function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, 
       <button class="icon-btn" id="whole" title="Целият лист" aria-label="Покажи целия лист"><span class="icon icon-sheet"></span></button>
       <nav class="strip" aria-label="Задачите">${tasks.map((_, i) => `<button class="strip-item" data-strip="${i}" title="Задача ${i + 1}" aria-label="Задача ${i + 1}"><span class="strip-dot"></span></button>`).join('')}</nav>
     </div>
-    <a class="exit" href="#/" title="Изход" aria-label="Изход"><span class="icon icon-exit"></span></a>
+    <a class="exit" href="#/nvo4" title="Изход" aria-label="Изход"><span class="icon icon-exit"></span></a>
     <div class="paper">
       <header class="sheet-header">
         <div class="stamp" id="stamp"></div>

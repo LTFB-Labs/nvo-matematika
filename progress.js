@@ -76,7 +76,7 @@ async function progressPage(view) {
   const answers = await data.answers.all();
   const attempts = (await data.attempts.all()).sort((a, b) => a.at.localeCompare(b.at));
   if (!answers.length) {
-    view.innerHTML = '<section class="page"><h1>Напредък</h1><p class="lead">Още няма решени задачи. Започни с <a href="#/test">пробен тест</a> или с <a href="#/types">упражнение</a>.</p></section>';
+    view.innerHTML = '<section class="page"><h1>Напредък</h1><p class="lead">Още няма решени задачи. Започни с <a href="#/nvo4/test">пробен тест</a> или с <a href="#/nvo4/types">упражнение</a>.</p></section>';
     return;
   }
   const rows = levelsOverTime(answers);
@@ -109,7 +109,7 @@ async function progressPage(view) {
         <span class="name">${s.number}. ${s.name}${SKILLS[s.number].hard ? ` <abbr title="${SKILLS[s.number].hard}">!</abbr>` : ''}</span>
         <span class="meter">${n !== null ? `<span style="width:${n}%;${id >= 0 ? `background:${SERIES_COLORS[id]}` : ''}"></span>` : ''}</span>
         <span class="pct">${n !== null ? `${n} %` : counts[s.number] ? `${counts[s.number]} задачи` : 'още няма'}</span>
-        <a class="small-link" href="#/practice/${s.number}">упражнявай</a></label>`; }).join('')}</div>
+        <a class="small-link" href="#/nvo4/practice/${s.number}">упражнявай</a></label>`; }).join('')}</div>
       <h2>История</h2>
       <ul class="history">${[...attempts].reverse().map(o => `<li>${new Date(o.at).toLocaleDateString('bg-BG', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })} · ${o.kind === 'test' ? 'Пробен тест' : `Упражнение: ${TEMPLATES[o.number - 1].name}`} · ${o.points} от ${o.max} т. · ${mmss(o.seconds)}</li>`).join('')}</ul>
       <button class="small" id="clear-history">Изтрий историята</button>

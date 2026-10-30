@@ -4,7 +4,8 @@
 
    Collections:
    - profile  — { id: 'me', name }
-   - attempts — one practice test or practice session: { id, kind, number?, seed, at, points, max, seconds, childId? }
+   - attempts — one practice test or practice session: { id, kind, number?, seed, at, points, max, seconds, childId? };
+     a practice session also has answered and score (out of 100)
    - answers  — every solved task: { id, attemptId, at, number, kind, points, scored, correct, seconds, realTaskId?, childId? }
      `realTaskId` identifies a task from a real MON test (e.g. 'nvo2024-13'):
      it is used to count how often it was solved right or wrong and the average time.
@@ -197,6 +198,21 @@ async function saveAttempt(attempt, answers) {
     return false;
   }
   if (la?.core) await grantBadges(attempt).catch(e => console.warn('Could not give a badge:', e));
+  return true;
+}
+
+/* A practice session is saved after every answer: the answer, then the session with its totals so far
+   (same id, so it is overwritten). Returns false if it could not be saved. */
+async function savePracticeAnswer(attempt, answer) {
+  const childId = la?.child ? { childId: la.child.id } : {};
+  try {
+    await data.answers.put({ id: newId(), attemptId: attempt.id, at: new Date().toISOString(), ...answer, ...childId });
+    await data.attempts.put({ ...attempt, ...childId });
+  } catch (e) {
+    console.warn('Could not save the answer:', e);
+    return false;
+  }
+  if (la?.core && attempt.answered === 1) await grantBadges(attempt).catch(e => console.warn('Could not give a badge:', e));
   return true;
 }
 
