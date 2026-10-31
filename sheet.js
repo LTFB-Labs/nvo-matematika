@@ -53,7 +53,10 @@ function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, 
   const st = { focus: -1, overview: false, answers: tasks.map(() => undefined), checked: new Set(), spent: tasks.map(() => 0), start: null, focusSince: Date.now(), finished: false, started: false };
   root.innerHTML = `<div class="desk ${mode} focus-mode no-anim">
     <div class="controls">
-      <div class="clock" id="clock" title="${mode === 'test' ? 'Оставащо време' : 'Време'}">${mode === 'test' ? mmss(minutes * 60) : '0:00'}</div>
+      <div class="controls-top">
+        <button class="icon-btn print-btn" id="print" title="Принтирай теста" aria-label="Принтирай теста"><span class="icon icon-print"></span></button>
+        <div class="clock" id="clock" title="${mode === 'test' ? 'Оставащо време' : 'Време'}">${mode === 'test' ? mmss(minutes * 60) : '0:00'}</div>
+      </div>
       <button class="icon-btn" id="whole" title="Целият лист" aria-label="Покажи целия лист"><span class="icon icon-sheet"></span></button>
       <nav class="strip" aria-label="Задачите">${tasks.map((_, i) => `<button class="strip-item" data-strip="${i}" title="Задача ${i + 1}" aria-label="Задача ${i + 1}"><span class="strip-dot"></span></button>`).join('')}</nav>
     </div>
@@ -216,6 +219,14 @@ function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, 
     requestAnimationFrame(() => (arts[st.focus] || paper).scrollIntoView({ block: st.focus >= 0 ? 'center' : 'start' }));
   }
 
+  /* Print: the whole sheet, also before "Start" (a blank test to solve on paper); then back to where it was */
+  function printSheet() {
+    const wasFocus = !st.overview;
+    if (wasFocus) { recordTime(); skipAnimation(); st.overview = true; render(); }
+    addEventListener('afterprint', () => { if (wasFocus && !st.finished) focus(st.focus); }, { once: true });
+    print();
+  }
+
   function checkTask(i) {
     st.checked.add(i);
     const a = arts[i], t = tasks[i];
@@ -291,6 +302,7 @@ function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, 
     if (b.closest('.check-btn')) { checkTask(st.focus); updateDone(); return render(); }
     if (b.closest('#done') || b.closest('#submit')) return finish();   /* the button is enabled only when everything is done */
     if (b.closest('#start')) return begin();
+    if (b.closest('#print')) return printSheet();
     if (b.closest('#whole')) { if (st.finished || !st.started) return; return st.overview ? focus(Math.max(0, st.focus)) : showWhole(); }
     if (st.finished) return;
     const el = b.closest('.task, .sheet-header');

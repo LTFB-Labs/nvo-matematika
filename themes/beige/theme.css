@@ -67,6 +67,7 @@
   --icon-up: url("themes/beige/icons/up.svg");
   --icon-down: url("themes/beige/icons/down.svg");
   --icon-exit: url("themes/beige/icons/exit.svg");
+  --icon-print: url("themes/beige/icons/print.svg");
   --logo: url("themes/beige/img/logo.svg");
   --avatar: url("themes/beige/img/avatar.png");   /* the fluffy mascot on the home page (pose "reading" from assets/mascot/poses-12.png) */
 }

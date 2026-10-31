@@ -67,6 +67,7 @@
   --icon-up: url("themes/blue/icons/up.svg");
   --icon-down: url("themes/blue/icons/down.svg");
   --icon-exit: url("themes/blue/icons/exit.svg");
+  --icon-print: url("themes/blue/icons/print.svg");
   --logo: url("themes/blue/img/logo.svg");
   --avatar: url("themes/blue/img/avatar.png");   /* the fluffy mascot on the home page (pose "reading" from assets/mascot/poses-12.png) */
 }

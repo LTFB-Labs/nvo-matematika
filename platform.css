@@ -140,7 +140,8 @@ body.in-test .topbar { display: none; }
 .clock.low { color: var(--wrong); }
 .icon-btn { display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); color: var(--ink); box-shadow: var(--shadow-small); }
 .exit { position: fixed; top: 14px; left: 16px; z-index: 5; display: grid; place-items: center; width: 42px; height: 42px; border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--ink); box-shadow: var(--shadow-small); font-size: 1.2rem; }
-.finished .controls .icon-btn { display: none; }
+.finished .controls .icon-btn:not(.print-btn) { display: none; }
+.controls-top { display: flex; gap: 6px; align-items: center; }
 
 .result-card { max-width: 760px; margin: 24px auto 0; padding: 22px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-small); }
 .result-card:empty { display: none; }
@@ -152,7 +153,7 @@ body.in-test .topbar { display: none; }
 
 @media print {
   body.in-test { background: var(--surface); }
-  .controls, .exit, .edge, .task-actions, .result-card, .submit-btn { display: none !important; }
+  .controls, .exit, .edge, .task-actions, .result-card, .submit-btn, .start-slot, .keypad-slot { display: none !important; }
   .desk { --zoom: 1 !important; padding: 0; }
   .paper { box-shadow: none; max-width: none; }
   .task { break-inside: avoid; }
@@ -182,6 +183,7 @@ body.in-test #result { padding: 0 16px; }
 .icon-up { --icon-mask: var(--icon-up); width: var(--arrow-size); height: var(--arrow-size); }
 .icon-down { --icon-mask: var(--icon-down); width: var(--arrow-size); height: var(--arrow-size); }
 .icon-exit { --icon-mask: var(--icon-exit); }
+.icon-print { --icon-mask: var(--icon-print); }
 /* the top of the sheet is in focus: the arrow leads to the first task */
 .sheet-header #nav-header { margin-top: .8em; }
 .theme-picker { display: flex; gap: 6px; align-items: center; margin-top: 36px; color: var(--muted); font-size: .9rem; }
