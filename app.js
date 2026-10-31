@@ -106,7 +106,7 @@ async function startSheet({ tasks, mode, title, subtitle, minutes, record }) {
   const name = await childName();
   view.innerHTML = '<div id="result"></div><div id="sheet-root"></div>';
   cleanup = openSheet($('#sheet-root'), {
-    tasks, mode, title, subtitle, minutes, name,
+    tasks, mode, title, subtitle, minutes, name, seed: record.seed,
     onName: saveName,
     onDone: async result => {
       const { answers, ...attempt } = result;

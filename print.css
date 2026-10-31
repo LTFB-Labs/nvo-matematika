@@ -1,46 +1,37 @@
+/* The test as a plain A4 document. Black on white on purpose (a printed sheet, not the app's look):
+   only the drawings take their colours from the theme. On screen it shows as an A4-wide page. */
+@page { size: A4; margin: 15mm 16mm 16mm; }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg-page); color: var(--ink); font: 17px/1.5 var(--font); }
-.print-header { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 2px solid var(--accent); background: var(--surface); position: sticky; top: 0; z-index: 2; }
-h1 { font-size: 1.3rem; margin: 0; }
-.subtitle { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
-.buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-button { font: inherit; font-size: .95rem; padding: 7px 14px; border: 1px solid var(--accent); border-radius: 8px; background: var(--surface); color: var(--accent); cursor: pointer; }
-button:hover, button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
-.primary { background: var(--accent); color: var(--on-accent); font-size: 1.05rem; padding: 10px 26px; }
+html, body { background: #fff; color: #000; }
+body { margin: 0; font: 12pt/1.45 var(--font-paper); }
+main { max-width: 178mm; margin: 0 auto; padding: 12mm 0 20mm; }
 
-main { max-width: 820px; margin: 0 auto; padding: 8px 16px 24px; }
-.task { display: flex; gap: 10px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.number { font-weight: 700; font-size: 1.15rem; min-width: 2.2em; }
-.task-content { flex: 1; min-width: 0; }
-.meta { color: var(--muted); font-size: .8rem; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.template-name { color: var(--accent); }
-.another { margin-left: auto; padding: 1px 8px; font-size: .78rem; }
-.task-text { margin: 6px 0 10px; }
-.expr { white-space: nowrap; font-weight: 600; margin-left: 6px; }
-.drawing { margin: 4px 0 12px; overflow-x: auto; }
-.choices { display: flex; flex-wrap: wrap; gap: 6px 28px; }
-.choices.has-drawings { gap: 14px; }
-.option { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 8px; cursor: pointer; }
-.option:hover { background: var(--surface-2); }
-.has-drawings .option { flex-direction: column; align-items: flex-start; border: 1px solid var(--line); }
-.free-answer input { font: inherit; width: 12em; padding: 4px 8px; border: none; border-bottom: 2px solid var(--line); background: transparent; }
-.free-answer input:focus { outline: none; border-bottom-color: var(--accent); }
-.part p { margin: 8px 0 4px; }
-.pts { color: var(--muted); font-size: .8rem; }
+.doc-header { text-align: center; border-bottom: 1.5pt solid #000; padding-bottom: 8pt; margin-bottom: 6pt; }
+.variant { margin: 0 0 6pt; font-size: 10pt; text-transform: uppercase; letter-spacing: .03em; }
+h1 { font-size: 13pt; margin: 0; text-transform: uppercase; }
+.date { margin: 2pt 0 8pt; }
+.fields { display: flex; justify-content: center; gap: 28pt; }
+.instructions { text-align: left; font-style: italic; margin: 10pt 0 0; }
+.line { display: inline-block; border-bottom: 1pt dotted #000; vertical-align: baseline; width: 45mm; height: 1em; }
+.line.long { width: 70mm; }
+.line.short { width: 15mm; }
 
-.solution { display: none; margin: 10px 0 0; padding: 8px 12px; background: var(--accent-light); border-left: 3px solid var(--accent); font-size: .92rem; }
-.answers-shown .solution, .checked .solution { display: block; }
-.checked .correct .number { color: var(--correct); }
-.checked .wrong .number { color: var(--wrong); }
-.checked .option.correct-option, .answers-shown .option.correct-option { outline: 2px solid var(--correct); }
-
-.footer-bar { max-width: 820px; margin: 0 auto; padding: 8px 16px 48px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-#result { font-size: 1.1rem; }
-.note { display: block; color: var(--muted); font-size: .85rem; }
+.task { display: grid; grid-template-columns: 2em 1fr auto; gap: 0 4pt; padding: 9pt 0; break-inside: avoid; }
+.number { font-weight: 700; }
+.points { font-size: 9pt; white-space: nowrap; }
+.task-text { margin: 0 0 6pt; font-weight: 700; }
+.drawing { margin: 2pt 0 8pt; }
+.choices { list-style: none; margin: 0; padding: 0 0 0 4pt; }
+.choices li { display: flex; align-items: center; gap: 6pt; margin: 2pt 0; }
+.choices.has-drawings { display: flex; flex-wrap: wrap; gap: 10pt 18pt; }
+.choices.has-drawings li { flex-direction: column; align-items: flex-start; }
+.circle { width: 9pt; height: 9pt; border: 1pt solid #000; border-radius: 50%; flex: none; }
+.part p { margin: 6pt 0 2pt; }
+.pts { font-size: 9pt; }
+.work { height: 22mm; }
+.answer { margin: 4pt 0 0; }
+.end { text-align: center; font-weight: 700; margin-top: 14pt; }
 
 @media print {
-  .print-header { position: static; border: none; }
-  .buttons, .another, .footer-bar, .meta .template-name { display: none; }
-  .task { break-inside: avoid; }
-  .answers-shown .solution { display: block; }
+  main { max-width: none; padding: 0; }
 }

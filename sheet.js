@@ -5,6 +5,8 @@
    Time is tracked per task (while it is in focus).
    In the practice test answers are checked at the end, in practice after each task. */
 
+/* Where the app's files are: inside LevAcademy the page is the shell's frame, so relative links would miss */
+const APP_BASE = new URL('.', document.currentScript.src);
 const KIND_TEXT = { choice: 'избери отговор', short: 'запиши отговора', extended: 'реши и запиши отговора', multipart: 'реши трите подусловия' };
 /* MON grading scale for the 4th grade NVO (2023–2024) */
 const MARK_SCALE = [[84, 'Отличен 6'], [62.5, 'Много добър 5'], [51.75, 'Добър 4'], [30, 'Среден 3'], [0, 'Слаб 2']];
@@ -48,7 +50,7 @@ function taskHtml(t, i) {
    Focus: a stage without scrolling. The item in focus (the header or a task) is in the middle, with
    larger text, and takes almost the whole sheet; the previous one peeks into the top 10 %, the next into the bottom 10 %,
    both under a veil; the arrows sit next to them. "The whole sheet" is a normal, smaller document. */
-function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, onDone }) {
+function openSheet(root, { tasks, mode, title, subtitle, minutes, name, seed, onName, onDone }) {
   /* focus = -1: the top of the sheet (name, date); 0…n-1: the tasks */
   const st = { focus: -1, overview: false, answers: tasks.map(() => undefined), checked: new Set(), spent: tasks.map(() => 0), start: null, focusSince: Date.now(), finished: false, started: false };
   root.innerHTML = `<div class="desk ${mode} focus-mode no-anim">
@@ -219,13 +221,8 @@ function openSheet(root, { tasks, mode, title, subtitle, minutes, name, onName, 
     requestAnimationFrame(() => (arts[st.focus] || paper).scrollIntoView({ block: st.focus >= 0 ? 'center' : 'start' }));
   }
 
-  /* Print: the whole sheet, also before "Start" (a blank test to solve on paper); then back to where it was */
-  function printSheet() {
-    const wasFocus = !st.overview;
-    if (wasFocus) { recordTime(); skipAnimation(); st.overview = true; render(); }
-    addEventListener('afterprint', () => { if (wasFocus && !st.finished) focus(st.focus); }, { once: true });
-    print();
-  }
+  /* Print: the same variant as a plain A4 document in a new tab (print.html), which opens the print dialog */
+  const printSheet = () => open(new URL(`print.html?v=${seed}`, APP_BASE), '_blank');
 
   function checkTask(i) {
     st.checked.add(i);

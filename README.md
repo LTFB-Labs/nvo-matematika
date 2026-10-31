@@ -4,4 +4,4 @@
 
 **Отвори:** https://levacademy.aleksandrenko.com/nvo-matematika/
 
-Това репо е само публикуваното копие. Кодът се пише в частното репо LTFB (модул `projects/lev-academy/projects/nvo-4-matematika`) и се качва тук със скрипта `publish.sh`. Последно публикуване: LTFB dca3980.
+Това репо е само публикуваното копие. Кодът се пише в частното репо LTFB (модул `projects/lev-academy/projects/nvo-4-matematika`) и се качва тук със скрипта `publish.sh`. Последно публикуване: LTFB 4da4e18.
