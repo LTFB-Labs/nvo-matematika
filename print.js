@@ -28,7 +28,6 @@ document.getElementById('doc').innerHTML = `<header class="doc-header">
     <div class="fields"><span>Име: <span class="line long"></span></span><span>Клас: <span class="line short"></span></span></div>
     <p class="instructions">Прочети внимателно задачите. На задачите от № 1 до № ${choiceCount} огради буквата на верния отговор. На останалите запиши отговора, а където е нужно, и решението. Имаш 60 минути.</p>
   </header>
-  ${tasks.map(taskHtml).join('')}
-  <p class="end">Край на теста</p>`;
+  ${tasks.map(taskHtml).join('')}`;
 
 addEventListener('load', () => setTimeout(() => print(), 300));

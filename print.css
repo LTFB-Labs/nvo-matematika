@@ -30,7 +30,6 @@ h1 { font-size: 13pt; margin: 0; text-transform: uppercase; }
 .pts { font-size: 9pt; }
 .work { height: 22mm; }
 .answer { margin: 4pt 0 0; }
-.end { text-align: center; font-weight: 700; margin-top: 14pt; }
 
 @media print {
   main { max-width: none; padding: 0; }
